@@ -31,6 +31,7 @@ dependencies:
     - editdistance==0.6.0
     - jiwer==2.3.0
     - piq
+    - librosa==0.8.1
     - -e git+https://github.com/CompVis/taming-transformers.git@master#egg=taming-transformers
     - -e git+https://github.com/openai/CLIP.git@main#egg=clip
     - -e .
