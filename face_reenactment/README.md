@@ -1,3 +1,4 @@
+## Face-Reenactment
 ### Preparation
 * Download AffectNet dataset from [here](http://mohammadmahoor.com/affectnet/). Please correct all path variables correspondingly.
 * In addition, to use ID loss during CLIP-guided finetuning, you are required to download the pretrained [IR-SE50](https://drive.google.com/file/d/1KW7bjndL3QG3sxBbZxreGHigcCCpsDgn/view) model from [TreB1eN](https://github.com/TreB1eN) and put it in the `/pretrained` directory.

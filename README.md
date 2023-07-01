@@ -1,4 +1,4 @@
-## Diffusion Models with Applications in Face Reenactment and Talking Face Synthesis
+## Diffusion Models with Applications in Face Reenactment and Talking-Face Synthesis
 
 ### Preparation
 * Clone the repo and its submodules:
