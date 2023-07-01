@@ -21,3 +21,12 @@ In both face-reenactment and talking-face generation scenarios, LDM training can
 ```
 CUDA_VISIBLE_DEVICES=<GPU_ID> python main.py --base configs/latent-diffusion/<config_spec>.yaml -t --gpus 0,
 ```
+### Acknowlegements
+* [https://github.com/CompVis/latent-diffusion](https://github.com/CompVis/latent-diffusion)
+* [https://github.com/CompVis/stable-diffusion](https://github.com/CompVis/stable-diffusion)
+* [https://github.com/CompVis/taming-transformers](https://github.com/CompVis/taming-transformers)
+* [https://github.com/gwang-kim/DiffusionCLIP](https://github.com/gwang-kim/DiffusionCLIP)
+* [https://github.com/filby89/spectre](https://github.com/filby89/spectre)
+
+### Contact
+For questions feel free to open an issue.
