@@ -13,3 +13,11 @@ conda activate ldm
 cd talking_face/external/av_hubert/fairseq/
 pip install --editable ./
 ```
+### First Stage
+In order to train first stage autonencoders, please follow the instructions of the [Taming Transformers repository](https://github.com/CompVis/taming-transformers). We recommend using a VQGAN as a first stage model.
+
+### LDM Training
+In both face-reenactment and talking-face generation scenarios, LDM training can be performed as follows:
+```
+CUDA_VISIBLE_DEVICES=<GPU_ID> python main.py --base configs/latent-diffusion/<config_spec>.yaml -t --gpus 0,
+```
