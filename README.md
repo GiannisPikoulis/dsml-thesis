@@ -10,4 +10,6 @@ cd dsml-thesis
 ```
 conda env create -f environment.yaml
 conda activate ldm
+cd talking_face/external/av_hubert/fairseq/
+pip install --editable ./
 ```
