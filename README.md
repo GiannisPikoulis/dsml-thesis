@@ -6,3 +6,8 @@
 git clone --recurse-submodules -j4 https://github.com/GiannisPikoulis/dsml-thesis
 cd dsml-thesis
 ```
+* A suitable conda environment named ldm can be created and activated with:
+```
+conda env create -f environment.yaml
+conda activate ldm
+```
