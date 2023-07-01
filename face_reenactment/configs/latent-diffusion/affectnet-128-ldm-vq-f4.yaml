@@ -1,0 +1,102 @@
+model:
+  base_learning_rate: 1.0e-06
+  target: ldm.models.diffusion.ddpm.LatentDiffusion
+  params:
+    linear_start: 0.0015
+    linear_end: 0.0205
+    num_timesteps_cond: 1
+    log_every_t: 200
+    timesteps: 1000
+    image_size: 32
+    channels: 3
+    first_stage_key: image
+    cond_stage_key: class_label
+    cond_stage_trainable: true
+    conditioning_key: crossattn
+    monitor: val_loss_ema
+        
+    unet_config:
+      target: ldm.modules.diffusionmodules.openaimodel.UNetModel
+      params:
+        image_size: 32
+        in_channels: 3
+        out_channels: 3
+        model_channels: 160
+        attention_resolutions:
+        #note: this isn\t actually the resolution but
+        # the downsampling factor, i.e. this corresnponds to
+        # attention on spatial resolution 8,16,32, as the
+        # spatial reolution of the latents is 32 for f4
+        - 4
+        - 2
+        - 1
+        num_res_blocks: 2
+        channel_mult:
+        - 1
+        - 2
+        - 4
+        num_head_channels: 32
+        use_spatial_transformer: true
+        transformer_depth: 1
+        context_dim: 512
+    
+    first_stage_config:
+      target: ldm.models.autoencoder.VQModelInterface
+      params:
+        embed_dim: 3
+        n_embed: 16384
+        ckpt_path: /gpu-data2/jpik/taming/logs/2022-10-12T11-38-11_affectnet-128-vqgan-f4/checkpoints/epoch=000005-val_rec_loss_epoch=0.138-val_aeloss_epoch=0.151.ckpt
+        ddconfig:
+          double_z: false
+          z_channels: 3
+          resolution: 128
+          in_channels: 3
+          out_ch: 3
+          ch: 128
+          ch_mult:
+          - 1
+          - 2
+          - 4
+          num_res_blocks: 2
+          attn_resolutions:
+          - 32
+          dropout: 0.0
+        lossconfig:
+          target: torch.nn.Identity
+    
+    cond_stage_config:
+      target: ldm.modules.encoders.modules.ClassEmbedder3
+      params:
+        embed_dim: 512
+        n_classes: 8
+        key: class_label
+        p_uncond: 0.20
+
+data:
+  target: main.DataModuleFromConfig
+  params:
+    batch_size: 24
+    num_workers: 4
+    train:
+      target: taming.data.custom.AffectnetTrain
+      params:
+        training_images_list_file: /gpu-data2/jpik/affectnet/train_aligned_v3.txt      
+        size: 128
+    validation:
+      target: taming.data.custom.AffectnetTest
+      params:
+        test_images_list_file: /gpu-data2/jpik/affectnet/val_aligned_v3.txt
+        size: 128
+
+lightning:
+  callbacks:
+    image_logger:
+      target: main.ImageLogger
+      params:
+        batch_frequency: 5000
+        max_images: 8
+        increase_log_steps: False
+
+  trainer:
+    benchmark: True
+    max_epochs: 100

@@ -1,0 +1,113 @@
+model:
+  base_learning_rate: 1.0e-06
+  target: ldm.models.diffusion.ddpm2cond.LatentDiffusion
+  params:
+    linear_start: 0.0015
+    linear_end: 0.0205
+    num_timesteps_cond: 1
+    log_every_t: 200
+    timesteps: 1000
+    image_size: 32
+    channels: 3
+    first_stage_key: image
+    cond_stage_key_1: class_label
+    cond_stage_key_2: audio
+    cond_stage_trainable: true
+    conditioning_key: crossattn
+    monitor: val_loss_ema
+    
+    unet_config:
+      target: ldm.modules.diffusionmodules.openaimodel.UNetModel
+      params:
+        image_size: 32
+        in_channels: 9
+        out_channels: 3
+        model_channels: 160
+        attention_resolutions:
+        #note: this isn\t actually the resolution but
+        # the downsampling factor, i.e. this corresnponds to
+        # attention on spatial resolution 8,16,32, as the
+        # spatial resolution of the latents is 32 for f4
+        - 4
+        - 2
+        - 1
+        num_res_blocks: 2
+        channel_mult:
+        - 1
+        - 2
+        - 4
+        num_head_channels: 32
+        use_spatial_transformer: true
+        transformer_depth: 1
+        context_dim: 1024
+    
+    first_stage_config:
+      target: ldm.models.autoencoder.VQModelInterface
+      params:
+        embed_dim: 3
+        n_embed: 16384
+        ckpt_path: /gpu-data2/jpik/taming/logs/2023-05-12T20-10-41_mead-128-vqgan-f4/checkpoints/epoch=000005-val_rec_loss_epoch=0.039-val_aeloss_epoch=0.044.ckpt
+        ddconfig:
+          double_z: false
+          z_channels: 3
+          resolution: 128
+          in_channels: 3
+          out_ch: 3
+          ch: 128
+          ch_mult:
+          - 1
+          - 2
+          - 4
+          num_res_blocks: 2
+          attn_resolutions:
+          - 32
+          dropout: 0.0
+        lossconfig:
+          target: torch.nn.Identity
+    
+    cond_stage_config_1:
+      target: ldm.modules.encoders.modules.ClassEmbedder
+      params:
+        embed_dim: 256
+        n_classes: 8
+        key: class_label
+        p_uncond: 0.2
+    cond_stage_config_2:
+      target: ldm.modules.encoders.modules.Conv1DTemporalAttention
+      params:
+        seq_len: 17
+        subspace_dim: 768
+        subspace2hidden: False
+
+data:
+  target: main.DataModuleFromConfig
+  params:
+    batch_size: 32
+    num_workers: 4
+    train:
+      target: taming.data.custom.MEADBase3
+      params:
+        tuples_path: /gpu-data2/jpik/MEAD/train.pkl
+        size: 128
+        mode: train
+        audio_window: 8
+    validation:
+      target: taming.data.custom.MEADBase3
+      params:
+        tuples_path: /gpu-data2/jpik/MEAD/val.pkl
+        size: 128
+        mode: train
+        audio_window: 8
+
+lightning:
+  callbacks:
+    image_logger:
+      target: main.ImageLogger
+      params:
+        batch_frequency: 5000
+        max_images: 8
+        increase_log_steps: False
+
+  trainer:
+    benchmark: True
+    max_epochs: 250

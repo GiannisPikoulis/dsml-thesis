@@ -1,0 +1,6 @@
+[submodule "talking_face/external/Visual_Speech_Recognition_for_Multiple_Languages"]
+	path = talking_face/external/Visual_Speech_Recognition_for_Multiple_Languages
+	url = https://github.com/mpc001/Visual_Speech_Recognition_for_Multiple_Languages.git
+[submodule "talking_face/external/av_hubert"]
+	path = talking_face/external/av_hubert
+	url = https://github.com/facebookresearch/av_hubert.git
