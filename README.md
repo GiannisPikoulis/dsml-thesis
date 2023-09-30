@@ -21,6 +21,20 @@ In both face-reenactment and talking-face generation scenarios, LDM training can
 ```
 CUDA_VISIBLE_DEVICES=<GPU_ID> python main.py --base configs/latent-diffusion/<config_spec>.yaml -t --gpus 0,
 ```
+
+### Citation
+If you use our code for your research, consider citing the following papers:
+```
+@misc{pikoulis2023photorealistic,
+      title={Photorealistic and Identity-Preserving Image-Based Emotion Manipulation with Latent Diffusion Models}, 
+      author={Ioannis Pikoulis and Panagiotis P. Filntisis and Petros Maragos},
+      year={2023},
+      eprint={2308.03183},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
+```
+
 ### Acknowlegements
 * [https://github.com/CompVis/latent-diffusion](https://github.com/CompVis/latent-diffusion)
 * [https://github.com/CompVis/stable-diffusion](https://github.com/CompVis/stable-diffusion)
