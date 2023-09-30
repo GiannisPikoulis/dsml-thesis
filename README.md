@@ -23,7 +23,7 @@ CUDA_VISIBLE_DEVICES=<GPU_ID> python main.py --base configs/latent-diffusion/<co
 ```
 
 ### Citation
-If you use our code for your research, consider citing the following papers:
+If you use our code or your research benefits from this repository, consider citing the following:
 ```
 @misc{pikoulis2023photorealistic,
       title={Photorealistic and Identity-Preserving Image-Based Emotion Manipulation with Latent Diffusion Models}, 
