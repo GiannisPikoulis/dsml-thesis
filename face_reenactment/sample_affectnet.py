@@ -40,13 +40,13 @@ def load_model_from_config(config, ckpt, ignore_keys=list()):
 def get_model(config_file, model_path):  
     config = OmegaConf.load(config_file) 
     ignore_keys = list()
-    #if 'v2' in config_file:
+    # if 'v2' in config_file:
     #    print('v2 detected in config filename')
     #    ignore_keys.append('cond_stage_model.embedding.weight')
     
     model, ignored = load_model_from_config(config, model_path, ignore_keys)
 
-    #if 'v2' in config_file:
+    # if 'v2' in config_file:
     #    print('v2 detected in config filename')
     #    print(model.cond_stage_model.embedding.weight.data)
     #    nul = model.cond_stage_model.embedding.weight[8].data.unsqueeze(0)

@@ -23,7 +23,7 @@ model:
         out_channels: 3
         model_channels: 160
         attention_resolutions:
-        #note: this isn\t actually the resolution but
+        # note: this isn\t actually the resolution but
         # the downsampling factor, i.e. this corresnponds to
         # attention on spatial resolution 8,16,32, as the
         # spatial reolution of the latents is 32 for f4
@@ -45,7 +45,7 @@ model:
       params:
         embed_dim: 3
         n_embed: 16384
-        ckpt_path: /gpu-data2/jpik/taming/logs/2022-10-12T11-38-11_affectnet-128-vqgan-f4/checkpoints/epoch=000005-val_rec_loss_epoch=0.138-val_aeloss_epoch=0.151.ckpt
+        ckpt_path: <CKPT_DIR>/epoch=000005-val_rec_loss_epoch=0.138-val_aeloss_epoch=0.151.ckpt
         ddconfig:
           double_z: false
           z_channels: 3
@@ -80,12 +80,14 @@ data:
     train:
       target: taming.data.custom.AffectnetTrain
       params:
-        training_images_list_file: /gpu-data2/jpik/affectnet/train_aligned_v3.txt      
+        # Precompute and replace accordingly
+        # training_images_list_file: /gpu-data2/jpik/affectnet/train_aligned_v3.txt      
         size: 128
     validation:
       target: taming.data.custom.AffectnetTest
       params:
-        test_images_list_file: /gpu-data2/jpik/affectnet/val_aligned_v3.txt
+        # Precompute and replace accordingly
+        # test_images_list_file: /gpu-data2/jpik/affectnet/val_aligned_v3.txt
         size: 128
 
 lightning:

@@ -24,7 +24,7 @@ model:
         out_channels: 3
         model_channels: 160
         attention_resolutions:
-        #note: this isn\t actually the resolution but
+        # note: this isn\t actually the resolution but
         # the downsampling factor, i.e. this corresnponds to
         # attention on spatial resolution 8,16,32, as the
         # spatial resolution of the latents is 32 for f4
@@ -46,7 +46,7 @@ model:
       params:
         embed_dim: 3
         n_embed: 16384
-        ckpt_path: /gpu-data2/jpik/taming/logs/2023-05-12T20-10-41_mead-128-vqgan-f4/checkpoints/epoch=000005-val_rec_loss_epoch=0.039-val_aeloss_epoch=0.044.ckpt
+        # ckpt_path: <CKPT_DIR>/epoch=000005-val_rec_loss_epoch=0.039-val_aeloss_epoch=0.044.ckpt
         ddconfig:
           double_z: false
           z_channels: 3
@@ -87,14 +87,16 @@ data:
     train:
       target: taming.data.custom.MEADBase3
       params:
-        tuples_path: /gpu-data2/jpik/MEAD/train.pkl
+        # Precompute and replace accordingly
+        # tuples_path: /gpu-data2/jpik/MEAD/train.pkl
         size: 128
         mode: train
         audio_window: 8
     validation:
       target: taming.data.custom.MEADBase3
       params:
-        tuples_path: /gpu-data2/jpik/MEAD/val.pkl
+        # Precompute and replace accordingly
+        # tuples_path: /gpu-data2/jpik/MEAD/val.pkl
         size: 128
         mode: train
         audio_window: 8
